@@ -25,13 +25,6 @@
     *{ transition:none !important; animation:none !important; }
   }
 
-  .page{
-    max-width:760px;
-    margin-inline:auto;
-    padding-inline:24px;
-    padding-block:40px 72px;
-  }
-
   h1,h2,h3{
     font-family:"Newsreader", ui-serif, Georgia, serif;
     font-weight:500;
@@ -43,72 +36,51 @@
   a{ color:var(--accent-2); text-decoration-thickness:1.5px; text-underline-offset:3px; }
   a:focus-visible, button:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; border-radius:2px; }
 
-  .topnav{
-    position:sticky;
-    top:env(safe-area-inset-top, 0px);
-    z-index:10;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:12px 20px;
-    flex-wrap:wrap;
-    padding:14px 24px;
-    background:rgba(10,14,20,0.88);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--line);
-  }
-  .topnav .wordmark{
-    font-family:"IBM Plex Mono", ui-monospace, monospace;
-    font-size:0.82rem;
-    letter-spacing:0.06em;
-    color:var(--ink);
-    text-decoration:none;
-    white-space:nowrap;
-  }
-  .topnav .wordmark b{ color:var(--accent); font-weight:600; }
-  .topnav nav{ display:flex; gap:18px; flex-wrap:wrap; }
-  .topnav nav a{
-    font-family:"IBM Plex Mono", ui-monospace, monospace;
-    font-size:0.72rem;
-    letter-spacing:0.07em;
-    text-transform:uppercase;
-    color:var(--ink-soft);
-    text-decoration:none;
-  }
-  .topnav nav a:hover{ color:var(--accent); }
-
   .eyebrow{
     font-family:"IBM Plex Mono", ui-monospace, monospace;
     font-size:0.72rem;
     letter-spacing:0.11em;
     text-transform:uppercase;
     color:var(--accent);
-    margin:36px 0 14px;
+    margin:0 0 14px;
   }
 
-  .hero h1{ font-size:clamp(2.4rem, 6vw, 3.4rem); font-style:italic; }
-  .hero .role{
+  /* ---- layout: sticky sidebar + scrolling content ---- */
+  .layout{
+    max-width:1120px;
+    margin-inline:auto;
+    padding-inline:24px;
+    padding-block:40px 72px;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:40px;
+  }
+  @media (min-width:900px){
+    .layout{ grid-template-columns:270px 1fr; gap:56px; align-items:start; }
+    .sidebar{ position:sticky; top:max(32px, env(safe-area-inset-top, 0px)); }
+  }
+
+  .sidebar{ padding-bottom:28px; border-bottom:1px solid var(--line); }
+  @media (min-width:900px){ .sidebar{ border-bottom:none; padding-bottom:0; } }
+
+  .sidebar h1{ font-size:clamp(2rem, 4vw, 2.3rem); font-style:italic; }
+  .sidebar .role{
     font-family:"Newsreader", ui-serif, serif;
-    font-size:clamp(1.05rem, 2.4vw, 1.25rem);
+    font-size:1rem;
     color:var(--ink-soft);
     margin-top:6px;
   }
-  .hero .lede{
-    max-width:62ch;
-    font-size:1.05rem;
-    line-height:1.65;
-    color:var(--ink);
-    margin-top:20px;
-  }
 
-  .hero-ctas{ display:flex; flex-wrap:wrap; gap:12px; margin-top:26px; }
+  .hero-ctas{ display:flex; flex-wrap:wrap; gap:10px; margin-top:22px; }
+  @media (min-width:900px){ .hero-ctas{ flex-direction:column; } }
   .btn{
     display:inline-flex;
     align-items:center;
+    justify-content:center;
     gap:6px;
     font-family:"IBM Plex Mono", ui-monospace, monospace;
-    font-size:0.82rem;
-    padding:10px 18px;
+    font-size:0.8rem;
+    padding:10px 16px;
     border-radius:8px;
     text-decoration:none;
     border:1px solid transparent;
@@ -118,18 +90,35 @@
   .btn-outline{ border-color:var(--line); color:var(--ink); }
   .btn-outline:hover{ border-color:var(--accent); color:var(--accent); }
 
-  .meta-row{
-    display:flex;
-    flex-wrap:wrap;
-    gap:6px 16px;
-    align-items:center;
-    margin-top:20px;
+  .sidenav{ display:flex; flex-wrap:wrap; gap:4px 18px; margin-top:26px; }
+  @media (min-width:900px){ .sidenav{ flex-direction:column; flex-wrap:nowrap; gap:11px; } }
+  .sidenav a{
     font-family:"IBM Plex Mono", ui-monospace, monospace;
-    font-size:0.8rem;
+    font-size:0.74rem;
+    letter-spacing:0.07em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    text-decoration:none;
+    padding-bottom:2px;
+    border-bottom:2px solid transparent;
+  }
+  @media (min-width:900px){
+    .sidenav a{ padding:0 0 0 13px; border-bottom:none; border-left:2px solid var(--line); }
+    .sidenav a.active{ border-left-color:var(--accent); }
+  }
+  .sidenav a:hover{ color:var(--ink); }
+  .sidenav a.active{ color:var(--accent); border-bottom-color:var(--accent); }
+
+  .sidebar-contact{
+    margin-top:26px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:0.78rem;
     color:var(--ink-soft);
   }
-  .meta-row .sep{ opacity:0.5; }
-
   .copybtn{
     font-family:"IBM Plex Mono", ui-monospace, monospace;
     font-size:0.72rem;
@@ -143,7 +132,43 @@
   }
   .copybtn:hover{ border-color:var(--accent); }
 
-  .waveform{ width:100%; height:auto; margin-block:40px 8px; display:block; color:var(--accent); }
+  .sidebar-foot{
+    margin-top:28px;
+    font-family:"Newsreader", ui-serif, serif;
+    font-style:italic;
+    font-size:0.9rem;
+    color:var(--ink-soft);
+  }
+  @media (max-width:899px){ .sidebar-foot{ display:none; } }
+
+  /* ---- main content ---- */
+  .content{ min-width:0; }
+
+  .stats-strip{
+    display:flex;
+    gap:32px;
+    flex-wrap:wrap;
+    margin-bottom:40px;
+    padding-bottom:28px;
+    border-bottom:1px solid var(--line);
+  }
+  .stat-tile .num{
+    display:block;
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-weight:600;
+    font-size:1.7rem;
+    color:var(--accent);
+    font-variant-numeric:tabular-nums;
+  }
+  .stat-tile .lbl{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:0.72rem;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--ink-soft);
+  }
+
+  .waveform{ width:100%; height:auto; margin-block:8px 8px; display:block; color:var(--accent); }
   .waveform path{ fill:none; stroke:currentColor; stroke-width:1.5; stroke-linecap:round; }
 
   .fig-caption{
@@ -151,10 +176,11 @@
     font-size:0.7rem;
     color:var(--ink-soft);
     letter-spacing:0.04em;
-    margin:0 0 48px;
+    margin:0 0 8px;
   }
 
-  section{ margin-block-start:56px; }
+  section{ margin-block-start:52px; }
+  .content > section:first-of-type{ margin-block-start:0; }
   section > h2{
     font-size:1.5rem;
     font-style:italic;
@@ -182,7 +208,7 @@
 
   .cards{
     display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
     gap:16px;
   }
   .card{
@@ -196,20 +222,16 @@
     gap:14px;
   }
   .card-head{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; flex-wrap:wrap; }
-  .card-head h3{ font-size:1.15rem; }
+  .card-head h3{ font-size:1.1rem; }
   .card-head a{ font-family:"IBM Plex Mono", ui-monospace, monospace; font-size:0.74rem; white-space:nowrap; }
   .card-desc{ margin:0; line-height:1.6; color:var(--ink-soft); font-size:0.93rem; }
 
-  .readout{
-    background:var(--mono-chip-bg);
-    border-radius:6px;
-    padding:12px 14px;
-  }
+  .readout{ background:var(--mono-chip-bg); border-radius:6px; padding:12px 14px; }
   .readout .stat{
     display:block;
     font-family:"IBM Plex Mono", ui-monospace, monospace;
     font-weight:600;
-    font-size:1.15rem;
+    font-size:1.1rem;
     color:var(--accent);
     font-variant-numeric:tabular-nums;
   }
@@ -222,12 +244,7 @@
     margin-top:3px;
   }
 
-  .live-stats{
-    margin:0;
-    font-family:"IBM Plex Mono", ui-monospace, monospace;
-    font-size:0.72rem;
-    color:var(--ink-soft);
-  }
+  .live-stats{ margin:0; font-family:"IBM Plex Mono", ui-monospace, monospace; font-size:0.72rem; color:var(--ink-soft); }
   .live-stats::before{ content:"live: "; opacity:0.6; }
 
   .chips{ display:flex; flex-wrap:wrap; gap:7px; margin-top:auto; }
@@ -240,6 +257,53 @@
     border-radius:20px;
   }
 
+  .section-note{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:0.78rem;
+    color:var(--ink-soft);
+    margin:-12px 0 24px;
+  }
+
+  /* ---- all-repos live list ---- */
+  .repo-controls{ display:flex; gap:10px; margin-bottom:18px; }
+  .repo-controls button{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:0.72rem;
+    letter-spacing:0.03em;
+    background:var(--surface-2);
+    color:var(--ink-soft);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:5px 14px;
+    cursor:pointer;
+  }
+  .repo-controls button.active{ color:var(--accent-ink); background:var(--accent); border-color:var(--accent); }
+  .repo-list{ display:flex; flex-direction:column; }
+  .repo-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:16px;
+    padding:15px 0;
+    border-bottom:1px solid var(--line);
+    flex-wrap:wrap;
+  }
+  .repo-list .repo-row:last-child{ border-bottom:none; }
+  .repo-main{ flex:1 1 320px; min-width:0; }
+  .repo-name{ font-family:"IBM Plex Mono", ui-monospace, monospace; font-size:0.9rem; color:var(--ink); text-decoration:none; font-weight:600; }
+  .repo-name:hover{ color:var(--accent); }
+  .repo-desc{ margin:4px 0 0; font-size:0.85rem; color:var(--ink-soft); line-height:1.5; }
+  .repo-meta{
+    display:flex;
+    gap:14px;
+    align-items:center;
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:0.74rem;
+    color:var(--ink-soft);
+    white-space:nowrap;
+  }
+  .lang-dot{ width:8px; height:8px; border-radius:50%; display:inline-block; margin-right:5px; vertical-align:middle; }
+  .repo-loading{ font-family:"IBM Plex Mono", ui-monospace, monospace; font-size:0.82rem; color:var(--ink-soft); }
   .more-repos{
     margin-top:20px;
     font-family:"IBM Plex Mono", ui-monospace, monospace;
@@ -259,11 +323,7 @@
   }
   .toolbox-group .chips span{ background:var(--surface-2); }
 
-  footer{
-    margin-top:64px;
-    padding-top:28px;
-    border-top:1px solid var(--line);
-  }
+  footer{ margin-top:64px; padding-top:28px; border-top:1px solid var(--line); }
   footer .eyebrow{ margin:0 0 16px; }
   .contact-row{
     display:flex;
@@ -273,193 +333,205 @@
     font-family:"IBM Plex Mono", ui-monospace, monospace;
     font-size:0.88rem;
   }
-  #email-text{ color:var(--ink); }
   .contact-links{ margin-top:14px; display:flex; gap:18px; flex-wrap:wrap; font-size:0.9rem; }
-  .signoff{
-    margin-top:32px;
-    font-family:"Newsreader", ui-serif, serif;
-    font-style:italic;
-    color:var(--ink-soft);
-  }
+  .signoff{ margin-top:32px; font-family:"Newsreader", ui-serif, serif; font-style:italic; color:var(--ink-soft); }
 </style>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-<div class="topnav">
-  <a class="wordmark" href="#top"><b>M.</b> Hanzala</a>
-  <nav aria-label="Section navigation">
-    <a href="#now-h">Now</a>
-    <a href="#about-h">About</a>
-    <a href="#projects-h">Projects</a>
-    <a href="#toolbox-h">Toolbox</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</div>
+<div class="layout">
 
-<div class="page" id="top">
-
-  <div class="hero">
+  <aside class="sidebar">
     <p class="eyebrow">AI systems engineer — FAST-NUCES, Pakistan</p>
     <h1>M. Hanzala</h1>
     <p class="role">Also published as Hanzala Yaqoob · GitHub: Hanzala&#8209;12</p>
-    <p class="lede">I build end-to-end AI systems — deep learning pipelines and autonomous agents taken all the way to production-ready APIs and full-stack applications. Real systems, shipped and measured, not toy demos.</p>
     <div class="hero-ctas">
       <a class="btn btn-solid" href="https://github.com/Hanzala-12" target="_blank" rel="noopener">View GitHub ↗</a>
       <a class="btn btn-outline" href="https://www.linkedin.com/in/hanzala-yaqoob-30545a29a/" target="_blank" rel="noopener">Connect on LinkedIn ↗</a>
     </div>
-    <div class="meta-row">
+    <nav class="sidenav" aria-label="Section navigation">
+      <a href="#now-h">Now</a>
+      <a href="#about-h">About</a>
+      <a href="#projects-h">Projects</a>
+      <a href="#repos-h">All Repos</a>
+      <a href="#toolbox-h">Toolbox</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="sidebar-contact">
       <span id="email-text">yaqoobhanzala@gmail.com</span>
       <button class="copybtn" id="copy-email" type="button">Copy</button>
     </div>
-  </div>
+    <p class="sidebar-foot">Building things that actually work, one pipeline at a time.</p>
+  </aside>
 
-  <svg class="waveform" viewBox="0 0 760 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path d="M0,30 L30,30 L45,12 L60,48 L75,20 L90,40 L110,30 L150,30 L165,8 L180,52 L195,18 L210,44 L230,30 L270,30 L285,15 L300,45 L315,24 L330,38 L350,30 L390,30 L405,10 L420,50 L435,20 L450,42 L470,30 L510,30 L525,14 L540,46 L555,26 L570,36 L590,30 L630,30 L645,9 L660,51 L675,19 L690,43 L710,30 L760,30"/>
-  </svg>
-  <p class="fig-caption">fig. 1 — signal trace, not decoration: this is the shape of a diarized speech waveform from Lectra&#8209;AI</p>
+  <main class="content">
 
-  <section class="now" aria-labelledby="now-h">
-    <h2 id="now-h">Currently</h2>
-    <div class="now-grid">
-      <div class="now-item">
-        <span class="k">Building →</span>
-        <p>A multi-agent LLM system for automated code review and refactoring.</p>
+    <div class="stats-strip" id="stats-strip" aria-label="Live GitHub stats">
+      <div class="stat-tile"><span class="num" id="stat-repos">—</span><span class="lbl">Public repos</span></div>
+      <div class="stat-tile"><span class="num" id="stat-stars">—</span><span class="lbl">Stars earned</span></div>
+      <div class="stat-tile"><span class="num" id="stat-langs">—</span><span class="lbl">Languages used</span></div>
+    </div>
+
+    <svg class="waveform" viewBox="0 0 760 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M0,30 L30,30 L45,12 L60,48 L75,20 L90,40 L110,30 L150,30 L165,8 L180,52 L195,18 L210,44 L230,30 L270,30 L285,15 L300,45 L315,24 L330,38 L350,30 L390,30 L405,10 L420,50 L435,20 L450,42 L470,30 L510,30 L525,14 L540,46 L555,26 L570,36 L590,30 L630,30 L645,9 L660,51 L675,19 L690,43 L710,30 L760,30"/>
+    </svg>
+    <p class="fig-caption">fig. 1 — signal trace, not decoration: this is the shape of a diarized speech waveform from Lectra&#8209;AI</p>
+
+    <section class="now" id="now-h" aria-label="Currently">
+      <h2>Currently</h2>
+      <div class="now-grid">
+        <div class="now-item">
+          <span class="k">Building →</span>
+          <p>A multi-agent LLM system for automated code review and refactoring.</p>
+        </div>
+        <div class="now-item">
+          <span class="k">Learning →</span>
+          <p>Advanced RAG patterns, quantization for edge deployment, multi-modal foundation models.</p>
+        </div>
       </div>
-      <div class="now-item">
-        <span class="k">Learning →</span>
-        <p>Advanced RAG patterns, quantization for edge deployment, multi-modal foundation models.</p>
+    </section>
+
+    <section class="about" id="about-h" aria-label="About">
+      <h2>About</h2>
+      <p>I build end-to-end AI systems — deep learning pipelines and autonomous agents taken all the way to production-ready APIs and full-stack applications. Real systems, shipped and measured, not toy demos.</p>
+      <p>M. Hanzala is an AI student at FAST National University of Computer and Emerging Sciences (FAST&#8209;NUCES), Pakistan, working at the intersection of applied machine learning, MLOps tooling, and agentic AI.</p>
+      <p>Every project below ships with the unglamorous parts included — data versioning, experiment tracking, CI/CD, containerized deployment — because a model that only runs in a notebook isn't a system.</p>
+    </section>
+
+    <section class="projects" id="projects-h" aria-label="Featured Systems">
+      <h2>Featured Systems</h2>
+      <div class="cards">
+
+        <article class="card">
+          <div class="card-head">
+            <h3>Pakistani Politician Classifier</h3>
+            <a href="https://github.com/Hanzala-12/pakistani-politician-classifier" target="_blank" rel="noopener">repo ↗</a>
+          </div>
+          <p class="card-desc">Facial recognition system identifying 16 Pakistani politicians. Trained and compared three architectures on 1,687 MTCNN-aligned images before shipping the best one behind an API.</p>
+          <div class="readout">
+            <span class="stat">96.32%</span>
+            <span class="stat-label">test accuracy, ArcFace + InceptionResNetV1</span>
+          </div>
+          <div class="chips"><span>ArcFace</span><span>DVC</span><span>MLflow</span><span>Airflow</span><span>Docker</span><span>FastAPI</span></div>
+          <p class="live-stats" data-repo="pakistani-politician-classifier">—</p>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <h3>AutoFix Agent</h3>
+            <a href="https://github.com/Hanzala-12/AutoFix-Agent" target="_blank" rel="noopener">repo ↗</a>
+          </div>
+          <p class="card-desc">Watches a GitHub issue tracker for bug-tagged issues, reproduces them in an isolated sandbox, and generates a verified patch via a ReAct loop before opening the pull request itself.</p>
+          <div class="readout">
+            <span class="stat">Issue → PR</span>
+            <span class="stat-label">autonomous fix loop, tests gate every patch</span>
+          </div>
+          <div class="chips"><span>Docker sandbox</span><span>tree&#8209;sitter AST</span><span>ReAct</span><span>Ollama</span></div>
+          <p class="live-stats" data-repo="AutoFix-Agent">—</p>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <h3>Lectra&#8209;AI</h3>
+            <a href="https://github.com/Hanzala-12/lectra-ai" target="_blank" rel="noopener">repo ↗</a>
+          </div>
+          <p class="card-desc">Production-oriented speech enhancement platform: noise removal, speaker diarization, and transcription, backed by 2,950+ lines of hand-written DSP for spectral restoration and adaptive routing.</p>
+          <div class="readout">
+            <span class="stat">64×</span>
+            <span class="stat-label">CPU speedup via Numba JIT + SIMD</span>
+          </div>
+          <div class="chips"><span>DeepFilterNet3</span><span>pyannote</span><span>faster&#8209;whisper</span><span>Numba</span></div>
+          <p class="live-stats" data-repo="lectra-ai">—</p>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <h3>JobSync</h3>
+            <a href="https://github.com/Hanzala-12/jobsync" target="_blank" rel="noopener">repo ↗</a>
+          </div>
+          <p class="card-desc">A file-driven job-search agent that reads postings, resumes, and knowledge-base documents, then produces skill-gap analysis, tailored application materials, and urgency-aware follow-up tracking.</p>
+          <div class="readout">
+            <span class="stat">G · A · M · E</span>
+            <span class="stat-label">Goal–Actions–Memory–Environment agent</span>
+          </div>
+          <div class="chips"><span>Groq · Llama 3</span><span>FastAPI</span><span>React</span></div>
+          <p class="live-stats" data-repo="jobsync">—</p>
+        </article>
+
+        <article class="card">
+          <div class="card-head">
+            <h3>LifSync AI Assistant</h3>
+            <a href="https://github.com/Hanzala-12/lifsync-ai-assistant" target="_blank" rel="noopener">repo ↗</a>
+          </div>
+          <p class="card-desc">A full-stack personal operations platform handling document intake, task extraction, billing workflows, and reminders — a personal AI chief of staff.</p>
+          <div class="readout">
+            <span class="stat">Inbox → Action</span>
+            <span class="stat-label">document intake to tracked task, end to end</span>
+          </div>
+          <div class="chips"><span>Python</span><span>Full&#8209;stack</span></div>
+          <p class="live-stats" data-repo="lifsync-ai-assistant">—</p>
+        </article>
+
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="about" aria-labelledby="about-h">
-    <h2 id="about-h">About</h2>
-    <p>M. Hanzala is an AI student at FAST National University of Computer and Emerging Sciences (FAST&#8209;NUCES), Pakistan, working at the intersection of applied machine learning, MLOps tooling, and agentic AI.</p>
-    <p>Every project below ships with the unglamorous parts included — data versioning, experiment tracking, CI/CD, containerized deployment — because a model that only runs in a notebook isn't a system.</p>
-  </section>
+    <section class="all-repos" id="repos-h" aria-label="All Repositories">
+      <h2>All Repositories</h2>
+      <p class="section-note">Pulled live from the GitHub API — every public repo, not just the highlights above.</p>
+      <div class="repo-controls" id="repo-controls">
+        <button type="button" data-sort="pushed" class="active">Recently updated</button>
+        <button type="button" data-sort="stars">Most starred</button>
+      </div>
+      <div class="repo-list" id="repo-list">
+        <p class="repo-loading">Loading repositories…</p>
+      </div>
+      <p class="more-repos">Full list, forks included → <a href="https://github.com/Hanzala-12?tab=repositories" target="_blank" rel="noopener">github.com/Hanzala&#8209;12</a></p>
+    </section>
 
-  <section class="projects" aria-labelledby="projects-h">
-    <h2 id="projects-h">Featured Systems</h2>
-    <div class="cards">
+    <section class="toolbox" id="toolbox-h" aria-label="Toolbox">
+      <h2>Toolbox</h2>
+      <div class="toolbox-group">
+        <span class="tk">Languages</span>
+        <div class="chips"><span>Python</span><span>TypeScript</span><span>JavaScript</span><span>Shell</span></div>
+      </div>
+      <div class="toolbox-group">
+        <span class="tk">ML / AI</span>
+        <div class="chips"><span>PyTorch</span><span>Jupyter</span><span>Ollama</span><span>Groq API</span></div>
+      </div>
+      <div class="toolbox-group">
+        <span class="tk">MLOps &amp; DevOps</span>
+        <div class="chips"><span>Docker</span><span>GitHub Actions</span><span>MLflow</span><span>DVC</span><span>Apache Airflow</span></div>
+      </div>
+      <div class="toolbox-group">
+        <span class="tk">Backend &amp; APIs</span>
+        <div class="chips"><span>FastAPI</span><span>Flask</span></div>
+      </div>
+      <div class="toolbox-group">
+        <span class="tk">Frontend</span>
+        <div class="chips"><span>React</span></div>
+      </div>
+      <div class="toolbox-group">
+        <span class="tk">Signal Processing</span>
+        <div class="chips"><span>NumPy</span><span>SciPy</span><span>Numba</span></div>
+      </div>
+    </section>
 
-      <article class="card">
-        <div class="card-head">
-          <h3>Pakistani Politician Classifier</h3>
-          <a href="https://github.com/Hanzala-12/pakistani-politician-classifier" target="_blank" rel="noopener">repo ↗</a>
-        </div>
-        <p class="card-desc">Facial recognition system identifying 16 Pakistani politicians. Trained and compared three architectures on 1,687 MTCNN-aligned images before shipping the best one behind an API.</p>
-        <div class="readout">
-          <span class="stat">96.32%</span>
-          <span class="stat-label">test accuracy, ArcFace + InceptionResNetV1</span>
-        </div>
-        <div class="chips"><span>ArcFace</span><span>DVC</span><span>MLflow</span><span>Airflow</span><span>Docker</span><span>FastAPI</span></div>
-        <p class="live-stats" data-repo="pakistani-politician-classifier">—</p>
-      </article>
+    <footer id="contact">
+      <p class="eyebrow">Correspondence</p>
+      <div class="contact-row">
+        <span id="email-text-2">yaqoobhanzala@gmail.com</span>
+        <button class="copybtn" id="copy-email-2" type="button">Copy</button>
+      </div>
+      <div class="contact-links">
+        <a href="https://github.com/Hanzala-12" target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="https://www.linkedin.com/in/hanzala-yaqoob-30545a29a/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+      <p class="signoff">Building things that actually work, one pipeline at a time.</p>
+    </footer>
 
-      <article class="card">
-        <div class="card-head">
-          <h3>AutoFix Agent</h3>
-          <a href="https://github.com/Hanzala-12/AutoFix-Agent" target="_blank" rel="noopener">repo ↗</a>
-        </div>
-        <p class="card-desc">Watches a GitHub issue tracker for bug-tagged issues, reproduces them in an isolated sandbox, and generates a verified patch via a ReAct loop before opening the pull request itself.</p>
-        <div class="readout">
-          <span class="stat">Issue → PR</span>
-          <span class="stat-label">autonomous fix loop, tests gate every patch</span>
-        </div>
-        <div class="chips"><span>Docker sandbox</span><span>tree&#8209;sitter AST</span><span>ReAct</span><span>Ollama</span></div>
-        <p class="live-stats" data-repo="AutoFix-Agent">—</p>
-      </article>
-
-      <article class="card">
-        <div class="card-head">
-          <h3>Lectra&#8209;AI</h3>
-          <a href="https://github.com/Hanzala-12/lectra-ai" target="_blank" rel="noopener">repo ↗</a>
-        </div>
-        <p class="card-desc">Production-oriented speech enhancement platform: noise removal, speaker diarization, and transcription, backed by 2,950+ lines of hand-written DSP for spectral restoration and adaptive routing.</p>
-        <div class="readout">
-          <span class="stat">64×</span>
-          <span class="stat-label">CPU speedup via Numba JIT + SIMD</span>
-        </div>
-        <div class="chips"><span>DeepFilterNet3</span><span>pyannote</span><span>faster&#8209;whisper</span><span>Numba</span></div>
-        <p class="live-stats" data-repo="lectra-ai">—</p>
-      </article>
-
-      <article class="card">
-        <div class="card-head">
-          <h3>JobSync</h3>
-          <a href="https://github.com/Hanzala-12/jobsync" target="_blank" rel="noopener">repo ↗</a>
-        </div>
-        <p class="card-desc">A file-driven job-search agent that reads postings, resumes, and knowledge-base documents, then produces skill-gap analysis, tailored application materials, and urgency-aware follow-up tracking.</p>
-        <div class="readout">
-          <span class="stat">G · A · M · E</span>
-          <span class="stat-label">Goal–Actions–Memory–Environment agent</span>
-        </div>
-        <div class="chips"><span>Groq · Llama 3</span><span>FastAPI</span><span>React</span></div>
-        <p class="live-stats" data-repo="jobsync">—</p>
-      </article>
-
-      <article class="card">
-        <div class="card-head">
-          <h3>LifSync AI Assistant</h3>
-          <a href="https://github.com/Hanzala-12/lifsync-ai-assistant" target="_blank" rel="noopener">repo ↗</a>
-        </div>
-        <p class="card-desc">A full-stack personal operations platform handling document intake, task extraction, billing workflows, and reminders — a personal AI chief of staff.</p>
-        <div class="readout">
-          <span class="stat">Inbox → Action</span>
-          <span class="stat-label">document intake to tracked task, end to end</span>
-        </div>
-        <div class="chips"><span>Python</span><span>Full&#8209;stack</span></div>
-        <p class="live-stats" data-repo="lifsync-ai-assistant">—</p>
-      </article>
-
-    </div>
-    <p class="more-repos">+ PhishLens and 15 more repositories → <a href="https://github.com/Hanzala-12?tab=repositories" target="_blank" rel="noopener">github.com/Hanzala&#8209;12</a></p>
-  </section>
-
-  <section class="toolbox" aria-labelledby="toolbox-h">
-    <h2 id="toolbox-h">Toolbox</h2>
-
-    <div class="toolbox-group">
-      <span class="tk">Languages</span>
-      <div class="chips"><span>Python</span><span>TypeScript</span><span>JavaScript</span><span>Shell</span></div>
-    </div>
-    <div class="toolbox-group">
-      <span class="tk">ML / AI</span>
-      <div class="chips"><span>PyTorch</span><span>Jupyter</span><span>Ollama</span><span>Groq API</span></div>
-    </div>
-    <div class="toolbox-group">
-      <span class="tk">MLOps &amp; DevOps</span>
-      <div class="chips"><span>Docker</span><span>GitHub Actions</span><span>MLflow</span><span>DVC</span><span>Apache Airflow</span></div>
-    </div>
-    <div class="toolbox-group">
-      <span class="tk">Backend &amp; APIs</span>
-      <div class="chips"><span>FastAPI</span><span>Flask</span></div>
-    </div>
-    <div class="toolbox-group">
-      <span class="tk">Frontend</span>
-      <div class="chips"><span>React</span></div>
-    </div>
-    <div class="toolbox-group">
-      <span class="tk">Signal Processing</span>
-      <div class="chips"><span>NumPy</span><span>SciPy</span><span>Numba</span></div>
-    </div>
-  </section>
-
-  <footer id="contact">
-    <p class="eyebrow">Correspondence</p>
-    <div class="contact-row">
-      <span id="email-text-2">yaqoobhanzala@gmail.com</span>
-      <button class="copybtn" id="copy-email-2" type="button">Copy</button>
-    </div>
-    <div class="contact-links">
-      <a href="https://github.com/Hanzala-12" target="_blank" rel="noopener">GitHub ↗</a>
-      <a href="https://www.linkedin.com/in/hanzala-yaqoob-30545a29a/" target="_blank" rel="noopener">LinkedIn ↗</a>
-    </div>
-    <p class="signoff">Building things that actually work, one pipeline at a time.</p>
-  </footer>
-
+  </main>
 </div>
 
 <script type="application/ld+json">
@@ -534,5 +606,94 @@
       })
       .catch(function(){ el.hidden = true; });
   });
+
+  var sections = document.querySelectorAll('main section[id], main footer[id]');
+  var navLinks = document.querySelectorAll('.sidenav a');
+  function setActive(id){
+    navLinks.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+    });
+  }
+  if ('IntersectionObserver' in window && sections.length) {
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) setActive(entry.target.id);
+      });
+    }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+    sections.forEach(function(s){ obs.observe(s); });
+  }
+
+  var LANG_COLORS = {
+    'Python':'#3572A5','TypeScript':'#3178C6','JavaScript':'#F1E05A',
+    'Jupyter Notebook':'#DA5B0B','Shell':'#89E051','HTML':'#E34C26',
+    'CSS':'#563D7C','Dockerfile':'#384D54','Java':'#B07219','C++':'#F34B7D'
+  };
+  var EXCLUDE_REPOS = ['Hanzala-12', 'Hanzala-12.github.io'];
+
+  fetch('https://api.github.com/users/Hanzala-12/repos?per_page=100')
+    .then(function(res){ if (!res.ok) throw new Error('not ok'); return res.json(); })
+    .then(function(repos){
+      var own = repos.filter(function(r){
+        return !r.fork && EXCLUDE_REPOS.indexOf(r.name) === -1;
+      });
+
+      var totalStars = own.reduce(function(sum, r){ return sum + r.stargazers_count; }, 0);
+      var langs = {};
+      own.forEach(function(r){ if (r.language) langs[r.language] = true; });
+
+      var repoCountEl = document.getElementById('stat-repos');
+      var starCountEl = document.getElementById('stat-stars');
+      var langCountEl = document.getElementById('stat-langs');
+      if (repoCountEl) repoCountEl.textContent = own.length;
+      if (starCountEl) starCountEl.textContent = totalStars;
+      if (langCountEl) langCountEl.textContent = Object.keys(langs).length;
+
+      var listEl = document.getElementById('repo-list');
+      function render(sortBy){
+        var sorted = own.slice().sort(function(a, b){
+          if (sortBy === 'stars') return b.stargazers_count - a.stargazers_count;
+          return new Date(b.pushed_at) - new Date(a.pushed_at);
+        }).slice(0, 15);
+
+        if (!sorted.length) {
+          listEl.innerHTML = '<p class="repo-loading">Nothing to show yet.</p>';
+          return;
+        }
+
+        listEl.innerHTML = sorted.map(function(r){
+          var dotColor = LANG_COLORS[r.language] || '#6E7B8B';
+          var desc = r.description ? r.description : 'No description yet.';
+          var lang = r.language ? '<span><span class="lang-dot" style="background:' + dotColor + '"></span>' + r.language + '</span>' : '';
+          return '<div class="repo-row">' +
+            '<div class="repo-main">' +
+              '<a class="repo-name" href="' + r.html_url + '" target="_blank" rel="noopener">' + r.name + '</a>' +
+              '<p class="repo-desc">' + desc + '</p>' +
+            '</div>' +
+            '<div class="repo-meta">' +
+              lang +
+              '<span>★ ' + r.stargazers_count + '</span>' +
+              '<span>' + relativeTime(r.pushed_at) + '</span>' +
+            '</div>' +
+          '</div>';
+        }).join('');
+      }
+
+      render('pushed');
+
+      var controls = document.getElementById('repo-controls');
+      if (controls) {
+        controls.addEventListener('click', function(e){
+          var btn = e.target.closest('button[data-sort]');
+          if (!btn) return;
+          controls.querySelectorAll('button').forEach(function(b){ b.classList.remove('active'); });
+          btn.classList.add('active');
+          render(btn.getAttribute('data-sort'));
+        });
+      }
+    })
+    .catch(function(){
+      var listEl = document.getElementById('repo-list');
+      if (listEl) listEl.innerHTML = '<p class="repo-loading">Could not load repositories right now — see the full list on GitHub below.</p>';
+    });
 })();
 </script>
