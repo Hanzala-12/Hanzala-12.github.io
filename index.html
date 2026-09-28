@@ -1,0 +1,466 @@
+<title>M. Hanzala</title>
+<style>
+  :root{
+    --bg:#F1F3F5;
+    --surface:#FFFFFF;
+    --surface-2:#E7EBEF;
+    --ink:#10151C;
+    --ink-soft:#4B5563;
+    --accent:#1857C4;
+    --accent-2:#B75A16;
+    --line:#C7CFD8;
+    --mono-chip-bg:#0F1720;
+    --mono-chip-ink:#E7ECF2;
+    color-scheme:light;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0B0F14;
+      --surface:#121820;
+      --surface-2:#1B232D;
+      --ink:#E7ECF2;
+      --ink-soft:#96A3B3;
+      --accent:#5B93FF;
+      --accent-2:#E8933D;
+      --line:#293441;
+      --mono-chip-bg:#1B232D;
+      --mono-chip-ink:#DCE6F2;
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0B0F14;
+    --surface:#121820;
+    --surface-2:#1B232D;
+    --ink:#E7ECF2;
+    --ink-soft:#96A3B3;
+    --accent:#5B93FF;
+    --accent-2:#E8933D;
+    --line:#293441;
+    --mono-chip-bg:#1B232D;
+    --mono-chip-ink:#DCE6F2;
+    color-scheme:dark;
+  }
+
+  * { box-sizing:border-box; }
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; animation:none !important; }
+  }
+
+  .page{
+    max-width:760px;
+    margin-inline:auto;
+    padding-inline:24px;
+    padding-block:56px 72px;
+  }
+
+  h1,h2,h3{
+    font-family:"Newsreader", ui-serif, Georgia, serif;
+    font-weight:500;
+    text-wrap:balance;
+    margin:0;
+    color:var(--ink);
+  }
+
+  a{ color:var(--accent); text-decoration-thickness:1.5px; text-underline-offset:3px; }
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; border-radius:2px; }
+
+  .eyebrow{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:0.72rem;
+    letter-spacing:0.11em;
+    text-transform:uppercase;
+    color:var(--accent-2);
+    margin:0 0 14px;
+  }
+
+  .hero h1{ font-size:clamp(2.4rem, 6vw, 3.4rem); font-style:italic; }
+  .hero .role{
+    font-family:"Newsreader", ui-serif, serif;
+    font-size:clamp(1.05rem, 2.4vw, 1.25rem);
+    color:var(--ink-soft);
+    margin-top:6px;
+  }
+  .hero .lede{
+    max-width:62ch;
+    font-size:1.05rem;
+    line-height:1.65;
+    color:var(--ink);
+    margin-top:20px;
+  }
+
+  .meta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 16px;
+    align-items:center;
+    margin-top:22px;
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:0.82rem;
+    color:var(--ink-soft);
+  }
+  .meta-row a{ color:var(--ink); }
+  .meta-row .sep{ opacity:0.5; }
+
+  .copybtn{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:0.72rem;
+    letter-spacing:0.03em;
+    background:var(--surface-2);
+    color:var(--ink);
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:2px 8px;
+    cursor:pointer;
+  }
+  .copybtn:hover{ border-color:var(--accent); }
+
+  .waveform{ width:100%; height:auto; margin-block:40px 8px; display:block; color:var(--accent); }
+  .waveform path{ fill:none; stroke:currentColor; stroke-width:1.5; stroke-linecap:round; }
+
+  .fig-caption{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:0.7rem;
+    color:var(--ink-soft);
+    letter-spacing:0.04em;
+    margin:0 0 48px;
+  }
+
+  section{ margin-block-start:56px; }
+  section > h2{
+    font-size:1.5rem;
+    font-style:italic;
+    border-bottom:1px solid var(--line);
+    padding-bottom:14px;
+    margin-bottom:24px;
+  }
+
+  .now-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+    gap:20px;
+  }
+  .now-item .k{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:0.72rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--accent-2);
+  }
+  .now-item p{ margin:8px 0 0; line-height:1.55; color:var(--ink); }
+
+  .about p{ max-width:66ch; line-height:1.7; color:var(--ink); margin:0; }
+  .about p + p{ margin-top:14px; }
+
+  .cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+    gap:16px;
+  }
+  .card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:22px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .card-head{ display:flex; justify-content:space-between; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .card-head h3{ font-size:1.15rem; }
+  .card-head a{ font-family:"IBM Plex Mono", ui-monospace, monospace; font-size:0.74rem; white-space:nowrap; }
+  .card-desc{ margin:0; line-height:1.6; color:var(--ink-soft); font-size:0.93rem; }
+
+  .readout{
+    background:var(--mono-chip-bg);
+    color:var(--mono-chip-ink);
+    border-radius:6px;
+    padding:12px 14px;
+  }
+  .readout .stat{
+    display:block;
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-weight:600;
+    font-size:1.15rem;
+    font-variant-numeric:tabular-nums;
+  }
+  .readout .stat-label{
+    display:block;
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:0.72rem;
+    opacity:0.75;
+    margin-top:3px;
+  }
+
+  .chips{ display:flex; flex-wrap:wrap; gap:7px; margin-top:auto; }
+  .chips span{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:0.7rem;
+    border:1px solid var(--line);
+    color:var(--ink-soft);
+    padding:3px 8px;
+    border-radius:20px;
+  }
+
+  .more-repos{
+    margin-top:20px;
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:0.82rem;
+    color:var(--ink-soft);
+  }
+
+  .toolbox-group + .toolbox-group{ margin-top:18px; }
+  .toolbox-group .tk{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:0.72rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    display:block;
+    margin-bottom:8px;
+  }
+  .toolbox-group .chips span{ background:var(--surface-2); }
+
+  footer{
+    margin-top:64px;
+    padding-top:28px;
+    border-top:1px solid var(--line);
+  }
+  footer .eyebrow{ margin-bottom:16px; }
+  .contact-row{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:12px;
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:0.88rem;
+  }
+  #email-text{ color:var(--ink); }
+  .contact-links{ margin-top:14px; display:flex; gap:18px; flex-wrap:wrap; font-size:0.9rem; }
+  .signoff{
+    margin-top:32px;
+    font-family:"Newsreader", ui-serif, serif;
+    font-style:italic;
+    color:var(--ink-soft);
+  }
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<div class="page">
+
+  <div class="hero">
+    <p class="eyebrow">AI systems engineer — FAST-NUCES, Pakistan</p>
+    <h1>M. Hanzala</h1>
+    <p class="role">Also published as Hanzala Yaqoob · GitHub: Hanzala&#8209;12</p>
+    <p class="lede">I build end-to-end AI systems — deep learning pipelines and autonomous agents taken all the way to production-ready APIs and full-stack applications. Real systems, shipped and measured, not toy demos.</p>
+    <div class="meta-row">
+      <a href="https://github.com/Hanzala-12" target="_blank" rel="noopener">github.com/Hanzala&#8209;12</a>
+      <span class="sep">/</span>
+      <a href="https://www.linkedin.com/in/hanzala-yaqoob-30545a29a/" target="_blank" rel="noopener">linkedin.com/in/hanzala&#8209;yaqoob</a>
+      <span class="sep">/</span>
+      <span id="email-text">yaqoobhanzala@gmail.com</span>
+      <button class="copybtn" id="copy-email" type="button">Copy</button>
+    </div>
+  </div>
+
+  <svg class="waveform" viewBox="0 0 760 60" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M0,30 L30,30 L45,12 L60,48 L75,20 L90,40 L110,30 L150,30 L165,8 L180,52 L195,18 L210,44 L230,30 L270,30 L285,15 L300,45 L315,24 L330,38 L350,30 L390,30 L405,10 L420,50 L435,20 L450,42 L470,30 L510,30 L525,14 L540,46 L555,26 L570,36 L590,30 L630,30 L645,9 L660,51 L675,19 L690,43 L710,30 L760,30"/>
+  </svg>
+  <p class="fig-caption">fig. 1 — signal trace, not decoration: this is the shape of a diarized speech waveform from Lectra&#8209;AI</p>
+
+  <section class="now" aria-labelledby="now-h">
+    <h2 id="now-h">Currently</h2>
+    <div class="now-grid">
+      <div class="now-item">
+        <span class="k">Building →</span>
+        <p>A multi-agent LLM system for automated code review and refactoring.</p>
+      </div>
+      <div class="now-item">
+        <span class="k">Learning →</span>
+        <p>Advanced RAG patterns, quantization for edge deployment, multi-modal foundation models.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" aria-labelledby="about-h">
+    <h2 id="about-h">About</h2>
+    <p>M. Hanzala is an AI student at FAST National University of Computer and Emerging Sciences (FAST&#8209;NUCES), Pakistan, working at the intersection of applied machine learning, MLOps tooling, and agentic AI.</p>
+    <p>Every project below ships with the unglamorous parts included — data versioning, experiment tracking, CI/CD, containerized deployment — because a model that only runs in a notebook isn't a system.</p>
+  </section>
+
+  <section class="projects" aria-labelledby="projects-h">
+    <h2 id="projects-h">Featured Systems</h2>
+    <div class="cards">
+
+      <article class="card">
+        <div class="card-head">
+          <h3>Pakistani Politician Classifier</h3>
+          <a href="https://github.com/Hanzala-12/pakistani-politician-classifier" target="_blank" rel="noopener">repo ↗</a>
+        </div>
+        <p class="card-desc">Facial recognition system identifying 16 Pakistani politicians. Trained and compared three architectures on 1,687 MTCNN-aligned images before shipping the best one behind an API.</p>
+        <div class="readout">
+          <span class="stat">96.32%</span>
+          <span class="stat-label">test accuracy, ArcFace + InceptionResNetV1</span>
+        </div>
+        <div class="chips"><span>ArcFace</span><span>DVC</span><span>MLflow</span><span>Airflow</span><span>Docker</span><span>FastAPI</span></div>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <h3>AutoFix Agent</h3>
+          <a href="https://github.com/Hanzala-12/AutoFix-Agent" target="_blank" rel="noopener">repo ↗</a>
+        </div>
+        <p class="card-desc">Watches a GitHub issue tracker for bug-tagged issues, reproduces them in an isolated sandbox, and generates a verified patch via a ReAct loop before opening the pull request itself.</p>
+        <div class="readout">
+          <span class="stat">Issue → PR</span>
+          <span class="stat-label">autonomous fix loop, tests gate every patch</span>
+        </div>
+        <div class="chips"><span>Docker sandbox</span><span>tree&#8209;sitter AST</span><span>ReAct</span><span>Ollama</span></div>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <h3>Lectra&#8209;AI</h3>
+          <a href="https://github.com/Hanzala-12/lectra-ai" target="_blank" rel="noopener">repo ↗</a>
+        </div>
+        <p class="card-desc">Production-oriented speech enhancement platform: noise removal, speaker diarization, and transcription, backed by 2,950+ lines of hand-written DSP for spectral restoration and adaptive routing.</p>
+        <div class="readout">
+          <span class="stat">64×</span>
+          <span class="stat-label">CPU speedup via Numba JIT + SIMD</span>
+        </div>
+        <div class="chips"><span>DeepFilterNet3</span><span>pyannote</span><span>faster&#8209;whisper</span><span>Numba</span></div>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <h3>JobSync</h3>
+          <a href="https://github.com/Hanzala-12/jobsync" target="_blank" rel="noopener">repo ↗</a>
+        </div>
+        <p class="card-desc">A file-driven job-search agent that reads postings, resumes, and knowledge-base documents, then produces skill-gap analysis, tailored application materials, and urgency-aware follow-up tracking.</p>
+        <div class="readout">
+          <span class="stat">G · A · M · E</span>
+          <span class="stat-label">Goal–Actions–Memory–Environment agent</span>
+        </div>
+        <div class="chips"><span>Groq · Llama 3</span><span>FastAPI</span><span>React</span></div>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <h3>LifSync AI Assistant</h3>
+          <a href="https://github.com/Hanzala-12/lifsync-ai-assistant" target="_blank" rel="noopener">repo ↗</a>
+        </div>
+        <p class="card-desc">A full-stack personal operations platform handling document intake, task extraction, billing workflows, and reminders — a personal AI chief of staff.</p>
+        <div class="readout">
+          <span class="stat">Inbox → Action</span>
+          <span class="stat-label">document intake to tracked task, end to end</span>
+        </div>
+        <div class="chips"><span>Python</span><span>Full&#8209;stack</span></div>
+      </article>
+
+    </div>
+    <p class="more-repos">+ PhishLens and 15 more repositories → <a href="https://github.com/Hanzala-12?tab=repositories" target="_blank" rel="noopener">github.com/Hanzala&#8209;12</a></p>
+  </section>
+
+  <section class="toolbox" aria-labelledby="toolbox-h">
+    <h2 id="toolbox-h">Toolbox</h2>
+
+    <div class="toolbox-group">
+      <span class="tk">Languages</span>
+      <div class="chips"><span>Python</span><span>TypeScript</span><span>JavaScript</span><span>Shell</span></div>
+    </div>
+    <div class="toolbox-group">
+      <span class="tk">ML / AI</span>
+      <div class="chips"><span>PyTorch</span><span>Jupyter</span><span>Ollama</span><span>Groq API</span></div>
+    </div>
+    <div class="toolbox-group">
+      <span class="tk">MLOps &amp; DevOps</span>
+      <div class="chips"><span>Docker</span><span>GitHub Actions</span><span>MLflow</span><span>DVC</span><span>Apache Airflow</span></div>
+    </div>
+    <div class="toolbox-group">
+      <span class="tk">Backend &amp; APIs</span>
+      <div class="chips"><span>FastAPI</span><span>Flask</span></div>
+    </div>
+    <div class="toolbox-group">
+      <span class="tk">Frontend</span>
+      <div class="chips"><span>React</span></div>
+    </div>
+    <div class="toolbox-group">
+      <span class="tk">Signal Processing</span>
+      <div class="chips"><span>NumPy</span><span>SciPy</span><span>Numba</span></div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="eyebrow">Correspondence</p>
+    <div class="contact-row">
+      <span id="email-text-2">yaqoobhanzala@gmail.com</span>
+      <button class="copybtn" id="copy-email-2" type="button">Copy</button>
+    </div>
+    <div class="contact-links">
+      <a href="https://github.com/Hanzala-12" target="_blank" rel="noopener">GitHub ↗</a>
+      <a href="https://www.linkedin.com/in/hanzala-yaqoob-30545a29a/" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+    <p class="signoff">Building things that actually work, one pipeline at a time.</p>
+  </footer>
+
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "M. Hanzala",
+  "alternateName": ["Hanzala-12", "Hanzala Yaqoob"],
+  "jobTitle": "AI Systems Engineer",
+  "affiliation": {
+    "@type": "CollegeOrUniversity",
+    "name": "FAST National University of Computer and Emerging Sciences"
+  },
+  "sameAs": [
+    "https://github.com/Hanzala-12",
+    "https://www.linkedin.com/in/hanzala-yaqoob-30545a29a/"
+  ],
+  "email": "mailto:yaqoobhanzala@gmail.com"
+}
+</script>
+
+<script>
+(function(){
+  function wireCopy(btnId, textId){
+    var btn = document.getElementById(btnId);
+    var src = document.getElementById(textId);
+    if (!btn || !src) return;
+    btn.addEventListener('click', function(){
+      var text = src.textContent;
+      function fallbackSelect(){
+        if (window.getSelection) {
+          var range = document.createRange();
+          range.selectNodeContents(src);
+          var sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function(){
+          var original = btn.textContent;
+          btn.textContent = 'Copied';
+          setTimeout(function(){ btn.textContent = original; }, 1500);
+        }).catch(fallbackSelect);
+      } else {
+        fallbackSelect();
+      }
+    });
+  }
+  wireCopy('copy-email', 'email-text');
+  wireCopy('copy-email-2', 'email-text-2');
+})();
+</script>
